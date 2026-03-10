@@ -8,3 +8,4 @@ allure_results/
 __pycache__/tests.cpython-314-pytest-9.0.2.pyc
 *.pyc
 /__pycache__
+
