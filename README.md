@@ -8,3 +8,10 @@
 7. test_add_book_in_favorites_add_one_book_from_books_genre проверяет, что книги добавляются в список избранных книг
 8. test_delete_book_from_favorites_delete_book_from_favorites проверяет, что книги удаляются из списка избранных книг
 9. test_get_list_of_favorites_books_get_favorites проверяет, что список избранных книг выводится корректно
+10. test_add_new_book_add_empty_string проверяет, что пустая строка не добавляется в books_genre
+11. test_add_new_book_add_lenght_1 проверяет, что книга из 1 символа добавляется в books_genre
+12. test_add_new_book_add_lenght_39 проверяет, что книга из 39 символов добавляется в books_genre
+13. test_add_new_book_add_lenght_40 проверяет, что книга из 40 символов добавляется в books_genre
+14. test_add_new_book_add_lenght_41 проверяет, что книга из 41 символа НЕ добавляется в books_genre
+15. test_add_new_book_add_repeat_adding_book проверяет, что книга не добавляется повторно в books_genre
+16. test_add_book_in_favorites_add_one_book_not_from_books_genre проверяет, что книга не добавляется в список избранных, если ее нет в books_genre

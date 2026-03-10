@@ -30,7 +30,7 @@ class TestBooksCollector:
 
         # проверяем, что добавилось именно две
         # словарь books_rating, который нам возвращает метод get_books_rating, имеет длину 2
-        assert len(collector.get_books_rating()) == 2
+        assert len(collector.get_books_genre()) == 2
 
     # напиши свои тесты ниже
     # чтобы тесты были независимыми в каждом из них создавай отдельный экземпляр класса BooksCollector()
@@ -62,16 +62,17 @@ class TestBooksCollector:
         assert collector.get_books_genre() == {}
 
     @pytest.mark.parametrize("name,book_genre", books)
-    def test_get_books_for_children_output_books_without_age_rating(self, name):
+    def test_get_books_for_children_output_books_without_age_rating(self, name, book_genre):
 
         collector = BooksCollector()
 
         collector.add_new_book(name)
-        assert collector.get_books_for_children() == [
-            "Гордость и предубеждение и зомби",
-            "Ходячий замок",
-            "Мы",
-        ]
+        collector.set_book_genre(name, book_genre)
+
+        if book_genre not in collector.genre_age_rating:
+            assert name in collector.get_books_for_children()
+        else:
+            assert name not in collector.get_books_for_children()
 
     @pytest.mark.parametrize("name,book_genre", books)
     def test_get_books_for_children_output_books_without_genre_age_rating_books(self, name, book_genre):
@@ -79,6 +80,7 @@ class TestBooksCollector:
         collector = BooksCollector()
 
         collector.add_new_book(name)
+        collector.set_book_genre(name, book_genre)
 
         assert "Оно" not in collector.get_books_for_children()
 
@@ -104,4 +106,68 @@ class TestBooksCollector:
 
         collector = BooksCollector()
         collector.get_list_of_favorites_books()
+        assert collector.favorites == []
+
+
+    def test_add_new_book_add_empty_string(self):
+       
+        collector = BooksCollector()
+
+        collector.add_new_book("")
+
+        assert len(collector.get_books_genre()) == 0
+
+
+    def test_add_new_book_add_lenght_1(self):
+       
+        collector = BooksCollector()
+
+        collector.add_new_book("В")
+
+        assert len(collector.get_books_genre()) == 1
+
+
+    def test_add_new_book_add_lenght_39(self):
+       
+        collector = BooksCollector()
+
+        collector.add_new_book("ВиноизодуванчиковВиноизодуванчиковВинои")
+
+        assert len(collector.get_books_genre()) == 1
+
+
+    def test_add_new_book_add_lenght_40(self):
+       
+        collector = BooksCollector()
+
+        collector.add_new_book("ВиноизодуванчиковВиноизодуванчиковВиноиз")
+
+        assert len(collector.get_books_genre()) == 1
+
+
+    def test_add_new_book_add_lenght_41(self):
+       
+        collector = BooksCollector()
+
+        collector.add_new_book("ВиноизодуванчиковВиноизодуванчиковВиноизо")
+
+        assert len(collector.get_books_genre()) == 0
+
+
+    def test_add_new_book_add_repeat_adding_book(self):
+
+        collector = BooksCollector()
+
+        collector.add_new_book("Гордость и предубеждение")
+        collector.add_new_book("Гордость и предубеждение")
+
+        assert len(collector.get_books_genre()) == 1
+
+
+    def test_add_book_in_favorites_add_one_book_not_from_books_genre(self):
+
+        collector = BooksCollector()
+
+        collector.add_book_in_favorites("Вино из одуванчиков")
+
         assert collector.favorites == []
